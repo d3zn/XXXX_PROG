@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+
+{% block content-header %}
+    <section class="content-header">
+      <h1>拨号器日常操作</h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Main row -->
+
+      <div class="row">
+        <div class="col-xs-12 ">
+            <!--上传录音-->
+          <div class="box box-success box-solid">
+            <div class="box-header "><h3 class="box-title">上传录音</h3></div>
+            <div class="box-body">
+              <form id="upWavForm" role="form">
+                <div class="col-md-offset-1 col-xs-8">
+                  <div class="form-group">
+                    <textarea class="form-control" name="upWavName" rows="2" placeholder="请分行填写录音名，如：65685987-20141113174744-754001006-24-49-7-:99"></textarea>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                  <input type="button" class="btn btn-success btn-lg btn-block btn-flat" value="上传录音" onclick="upWav();" />
+                </div>
+              </form>
+            </div>
+          </div>
+            <!--./上传录音-->
+
+            <!--下载录音-->
+          <div class="box box-warning box-solid">
+            <div class="box-header "><h3 class="box-title">下载录音</h3></div>
+            <div class="box-body">
+              <form id="downWavForm" role="form" >
+                <div class="col-md-offset-1 col-xs-8">
+                  <div class="form-group">
+                    <textarea class="form-control" name="downWavName" rows="2" placeholder="请分行填写录音名，如：65685987-20141113174744-754001006-24-49-7-:99"></textarea>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                  <button type="button" class="btn btn-warning btn-lg btn-block btn-flat" data-toggle="modal" data-target="#downWavModal" onclick="downWav();">下载录音</button>
+                </div>
+                <div class="modal fade" id="downWavModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    提示
+                                </h4>
+                            </div>
+                            <div id="retupWav" class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+              </form>
+            </div>
+          </div>
+            <!--./下载录音-->
+
+            <!--上传模板-->
+          <div class="box box-danger box-solid">
+            <div class="box-header "><h3 class="box-title">上传模板</h3></div>
+            <div class="box-body">
+              <form id="upSTBForm" role="form">
+                <div class="col-md-offset-1 col-xs-8">
+                  <div class="form-group">
+                    <textarea class="form-control" name="upSTBName" rows="2" placeholder="请分行填写录音名，如：65685987-20141113174744-754001006-24-49-7-:99"></textarea>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                  <input type="button" class="btn btn-danger btn-lg btn-block btn-flat" value="上传模板" onclick="upSTB();" />
+                </div>
+              </form>
+            </div>
+          </div>
+            <!--./上传模板-->
+
+
+            <!--任务结果-->
+          <div class="box box-default box-solid">
+            <div class="box-header "><h3 class="box-title">任务结果</h3></div>
+            <div class="box-body">
+            4444
+            </div>
+          </div>
+            <!--./任务结果-->
+        </div>
+      </div>
+
+
+      <!-- /.row (main row) -->
+
+    </section>
+{% endblock %}
+
+{% block page_js %}
+<script>
+
+function upWav() {
+    $.ajax({
+        type: "POST",
+        url: "{{ request.path }}",
+
+        data: $('#upWavForm').serialize(),
+        async: true,
+        cache: false,
+        success: function (data) {
+            console.log(data);   //data即为后台返回的数据
+        }
+    });
+}
+function downWav() {
+    $.ajax({
+        type: "POST",
+        url: "{{ request.path }}",
+
+        data: $('#downWavForm').serialize(),
+        async: true,
+        cache: false,
+        success: function (data) {
+            //console.log(data);   //data即为后台返回的数据
+            $('#retupWav').html(data)
+        }
+    });
+}
+function upSTB() {
+    $.ajax({
+        type: "POST",
+        url: "{{ request.path }}",
+        data: $('#upSTBForm').serializeArray(),
+        async: false,
+        cache: false,
+        success: function (data) {
+            console.log(data);   //data即为后台返回的数据
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

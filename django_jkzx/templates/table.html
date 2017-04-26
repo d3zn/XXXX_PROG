@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'plugins/datatables/css/dataTables.bootstrap.min.css' %}" type="text/css" />
+{% endblock %}
+
+
+{% block content-header %}
+    <section class="content-header">
+      <h1>
+        表模板
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box box-success">
+          <div class="box-header ">
+            <h3 class="box-title">{{ title }}</h3>
+          </div>
+
+          <div class="box-body">
+          <div class="table-responsive">
+            <table id="example" class="table table-bordered table-striped dataTable" cellspacing="0" width="100%">
+              <thead>
+                <!--表格头部-->
+                {% block table_th %}
+                {% endblock %}
+              </thead>
+              <tbody>
+              {% block table_td %}
+              {% endblock %}
+              </tbody>
+              <tfoot>
+              {% block table_tf %}
+              {% endblock %}
+              </tfoot>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+{% endblock %}
+
+
+{% block page_js %}
+<script src="{% static 'plugins/datatables/js/jquery.dataTables.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'plugins/datatables/js/dataTables.bootstrap.min.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#example').DataTable({
+        //分页配置
+        "paging": true,
+        //搜索配置
+        "searching": true,
+        "language": {
+            "lengthMenu": '<select class="form-control input-xsmall">' + '<option value="10">10</option>' + '<option value="25">25</option>' + '<option value="50">50</option>' + '<option value="100">100</option>' + '</select>条记录',//左上角的分页大小显示。
+
+            "paginate": {//分页的样式内容。
+                previous: "上一页",
+                next: "下一页",
+                first: "第一页",
+                last: "最后"
+            },
+
+            "zeroRecords": "无匹配搜索项",//table tbody内容为空时，tbody的内容。
+            //下面三者构成了总体的左下角的内容。
+            "info": "显示第 _START_ 条到第 _END_ 条结果，共 _MAX_ 条",//左下角的信息显示，大写的词为关键字。
+            "infoEmpty": "显示第 0 条到第 0 条结果，共 _MAX_ 条",//筛选为空时左下角的显示。
+            "infoFiltered": "，筛选出 _TOTAL_ 条匹配项"//筛选之后的左下角筛选提示，
+        },
+        "pagingType": "full_numbers", //分页样式的类型
+    });
+});
+
+</script>
+{% endblock %}

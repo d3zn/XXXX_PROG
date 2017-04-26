@@ -1,0 +1,50 @@
+{% extends 'table.html' %}
+{% load staticfiles %}
+
+{% block content-header %}
+    <section class="content-header">
+      <h1>
+        拨号器
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">拨号器</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block table_th %}
+<tr class="active">
+  <td>主机名</td>
+  <td>IP地址</td>
+  <td>状态</td>
+  <td>操作</td>
+</tr>
+{% endblock %}
+
+{% block table_td %}
+{% for bhq in bhq_obj %}
+<tr>
+  <td><a href="#">{{ bhq.hostname }}</a></td>
+  <td>
+      {% for nic in bhq.nic_set.select_related %}
+        {% if nic.ipaddr %}
+             <b>{{ nic.nic_name }} :</b>  {{ nic.ipaddr }} &nbsp;&nbsp;
+        {% endif %}
+      {% endfor %}
+  </td>
+
+  <td>{{ bhq.get_status_display }}</td>
+  <td>
+    <div class="btn-group-xs">
+    <a href="{% url 'detail' bhq.id %}" class="btn btn-flat bg-aqua" role="button">详情</a>
+    <button type="button" class="btn btn-flat">删除</button>
+    </div>
+  </td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block table_tf %}
+
+{% endblock %}

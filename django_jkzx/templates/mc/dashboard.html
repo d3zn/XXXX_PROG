@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+
+{% block content-header %}
+    <section class="content-header">
+      <h1>首页</h1>
+      <ol class="breadcrumb ">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <!-- Main row -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>首页{{ request.path }}</h1>
+        </div>
+      </div>
+
+
+      <!-- /.row (main row) -->
+    </section>
+{% endblock %}

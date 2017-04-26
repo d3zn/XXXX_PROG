@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content-header %}
+    <section class="content-header">
+    {% if not error %}
+    <h1>拨号器：{{ schedule_obj.hostname }}</h1>
+    {% else %}
+    <h1>资产不存在！</h1>
+    {% endif %}
+      <ol class="breadcrumb ">
+        <li><a href="#"><i class="fa fa-dashboard"></i> home</a></li>
+        <li><a href="{% url 'overview' %}">拨号器</a></li>
+        <li class="active">详情信息</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+
+    <!-- Main row -->
+    <div class="row">
+      <div class="col-xs-12 ">
+        <div class="box box-success">
+          <div class="box-header ">
+            <h3 class="box-title">{{ schedule_obj.hostname }} 拨号器详细信息</h3>
+          </div>
+          <div class="box-body nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab-schedule-info" aria-expanded="true">基本信息</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab-hardware-info" aria-expanded="false">硬件</a>
+                </li>
+            </ul>
+            <div class="tab-content ">
+                <div id="tab-schedule-info" class="tab-pane fade active in">
+                    <table class="asset-info-table">
+                       <tr>
+                           <td class="col-xs-2 bold">主机名称</td>
+                           <td class="col-xs-4">: {{ schedule_obj.hostname }}</td>
+                           <td class="col-xs-2 bold">UUID</td>
+                           <td class="col-xs-4">: {{ schedule_obj.uuid }}</td>
+                       </tr>
+                       <tr>
+                           <td class="col-xs-2 bold">中继号</td>
+                           <td class="col-xs-4">: {{ schedule_obj.relaynum }}</td>
+                           <td class="col-xs-2 bold">系统平台</td>
+                           <td class="col-xs-4">: {{ schedule_obj.os_type }}</td>
+                       </tr>
+                       <tr>
+                           <td class="col-xs-2 bold">状态</td>
+                           <td class="col-xs-4">: {{ schedule_obj.get_status_display }}</td>
+                           <td class="col-xs-2 bold">机房信息</td>
+                           <td class="col-xs-4">: {{ schedule_obj.idc }}</td>
+                       </tr>
+                        <tr>
+                           <td class="col-xs-2 bold">系统版本</td>
+                           <td class="col-xs-4">: {{ schedule_obj.os_version }}</td>
+                           <td class="col-xs-2 bold">内核版本</td>
+                           <td class="col-xs-4">: {{ schedule_obj.os_release }}</td>
+                       </tr>
+                        <tr>
+                           <td class="col-xs-2 bold">资产创建日期</td>
+                           <td class="col-xs-4">: {{ schedule_obj.create_date }}</td>
+                           <td class="col-xs-2 bold">最后更新日期</td>
+                           <td class="col-xs-4">: {{ schedule_obj.update_date }}</td>
+                       </tr>
+                    </table>
+                </div>
+
+                <div id="tab-hardware-info" class="tab-pane fade">
+                    <table class="asset-info-table">
+                       <tr>
+                           <td class="col-xs-2 bold">Server Info</td>
+                           <td class="col-xs-4">: 阿斯顿发放大法</td>
+                           <td class="col-xs-2 bold">CPU Info</td>
+                           <td class="col-xs-4">: Intel(R) Core(TM) i5-3427U CPU @ 1.80GHz</td>
+                       </tr>
+                       <tr>
+                           <td class="col-xs-2 bold">RAM Info</td>
+                           <td class="col-xs-4">: 阿斯顿发撒旦法</td>
+                           <td class="col-xs-2 bold">毛线</td>
+                           <td class="col-xs-4">: 这是个测试数据</td>
+                       </tr>
+                       <tr>
+                           <td class="col-xs-2 bold">物理CPU</td>
+                           <td class="col-xs-4">: {{ schedule_obj.cpu.cpu_count }}</td>
+                           <td class="col-xs-2 bold">CPU核数</td>
+                           <td class="col-xs-4">: {{ schedule_obj.cpu.cpu_core }}</td>
+                       </tr>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var active_node = $("#mainnav-menu a[href='" + "{% url 'overview' %}" +"']");
+        active_node.parent().addClass("active");
+        if (active_node.parent().parent().hasClass("treeview-menu")){
+            active_node.parent().parent().parent().addClass("active");
+        }
+    });//end doc ready
+
+</script>
+
+{% endblock page_js %}
